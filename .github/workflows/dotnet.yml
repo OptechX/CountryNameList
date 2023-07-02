@@ -31,9 +31,9 @@ jobs:
     - name: Test
       run: |
         dotnet test --no-build --verbosity normal
-        if [ -f output.txt ]; then
-          echo "output.txt exists"
+        if [ -f $(find ./bin -name "output.txt") ]; then
+            echo "output.txt exists"
         else
-          echo "output.txt does not exist"
-          exit 1
+            echo "output.txt does not exist"
+            exit 1
         fi
