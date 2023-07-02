@@ -11,10 +11,16 @@ internal class Program
     private static string apiUrl = "http://localhost:5179/api/CountryNameIndex";
     private static async Task Main(string[] args)
     {
+        bool runPost = true; // Default value
+
+        // Check if "--no-post" switch argument is provided
+        if (args.Length > 0 && args[0] == "--no-post")
+        {
+            runPost = false;
+        }
+
         if (File.Exists(outputFilePath))
             File.Delete(outputFilePath);
-
-        Thread.Sleep(3000);
 
         List<string> countryList = new();
         CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
@@ -45,7 +51,10 @@ internal class Program
             }
         }
 
-        await PostCountriesFromFileAsync(filePath: outputFilePath);
+        if (runPost)
+        {
+            await PostCountriesFromFileAsync(filePath: outputFilePath);
+        }
     }
 
     private static async Task PostCountriesFromFileAsync(string filePath)
