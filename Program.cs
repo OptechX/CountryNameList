@@ -61,8 +61,8 @@ internal class Program
     {
         using (StreamReader reader = new StreamReader(filePath))
         {
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            string? line;
+            while ((line = await reader.ReadLineAsync()) is not null)
             {
                 string countryName = line.Trim();
                 await PostCountryAsync(countryName);
